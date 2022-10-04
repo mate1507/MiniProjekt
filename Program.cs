@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var AllowSomeStuff = "_AllowSomeStuff";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: AllowSomeStuff, builder => {
+    options.AddPolicy(name: AllowSomeStuff, builder =>
+    {
         builder.AllowAnyOrigin()
                .AllowAnyHeader()
                .AllowAnyMethod();
@@ -28,26 +29,26 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<DataService>();
 
 // Dette kode kan bruges til at fjerne "cykler" i JSON objekterne.
-/*
+
 builder.Services.Configure<JsonOptions>(options =>
 {
     // Her kan man fjerne fejl der opstår, når man returnerer JSON med objekter,
     // der refererer til hinanden i en cykel.
     // (altså dobbelrettede associeringer)
-    options.SerializerOptions.ReferenceHandler = 
+    options.SerializerOptions.ReferenceHandler =
         System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
-*/
+
 
 var app = builder.Build();
 
-/* Seed data hvis nødvendigt.
+//Seed data hvis nødvendigt.
 using (var scope = app.Services.CreateScope())
 {
     var dataService = scope.ServiceProvider.GetRequiredService<DataService>();
     dataService.SeedData(); // Fylder data på, hvis databasen er tom. Ellers ikke.
 }
-*/
+
 app.UseHttpsRedirection();
 app.UseCors(AllowSomeStuff);
 
@@ -64,15 +65,18 @@ app.MapGet("/", (DataService service) =>
 {
     return new { message = "Hello World!" };
 });
-/*
+
 app.MapGet("/api/posts", (DataService service) =>
 {
-    return service.GetPosts().Select(b => new { 
-        postId = b.PostId, 
-        PostName = b.PostName, 
-        user = new {
-            b.User.UserId, b.User.Username
-        } 
+    return service.GetPosts().Select(b => new
+    {
+        PostId = b.PostId,
+        PostName = b.PostName,
+        user = new
+        {
+            b.User.UserId,
+            b.User.Username
+        }
     });
 });
 
@@ -81,7 +85,8 @@ app.MapGet("/api/users", (DataService service) =>
     return service.GetUsers().Select(a => new { a.UserId, a.Username });
 });
 
-app.MapGet("/api/users/{id}", (DataService service, int id) => {
+app.MapGet("/api/users/{id}", (DataService service, int id) =>
+{
     return service.GetUser(id);
 });
 
@@ -90,7 +95,9 @@ app.MapPost("/api/posts", (DataService service, NewPostData data) =>
     string result = service.CreatePost(data.PostName, data.UserId);
     return new { message = result };
 });
-*/
+
 app.Run();
 
 record NewPostData(string PostName, int UserId);
+
+
