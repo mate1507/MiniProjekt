@@ -95,6 +95,11 @@ app.MapPost("/api/posts", (DataService service, NewPostData data) =>
     string result = service.CreatePost(data.PostName, data.UserId);
     return new { message = result };
 });
+app.MapGet("/api/post/{id}", (DataService service, int id) =>
+{
+    return service.GetPost(id);
+});
+
 
 app.Run();
 

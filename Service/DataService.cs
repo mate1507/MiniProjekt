@@ -29,17 +29,26 @@ public class DataService
             db.Users.Add(new User { Username = "Mette" });
             db.SaveChanges();
         }
-        
-                Post post = db.Posts.FirstOrDefault()!;
-                if (post == null)
-                {
-                    db.Posts.Add(new Post { PostName = "Harry Potter", User = user });
-                    db.Posts.Add(new Post { PostName = "Ringenes Herre", User = user });
-                    db.Posts.Add(new Post { PostName = "Entity Framework for Dummies", User = user });
-                    db.SaveChanges();
-                }
 
-        
+        Post post = db.Posts.FirstOrDefault()!;
+        if (post == null)
+        {
+            db.Posts.Add(new Post { PostName = "Harry Potter", User = user });
+            db.Posts.Add(new Post { PostName = "Ringenes Herre", User = user });
+            db.Posts.Add(new Post { PostName = "Entity Framework for Dummies", User = user });
+            db.SaveChanges();
+        }
+
+        Comment comment = db.Comments.FirstOrDefault()!;
+        if (comment == null)
+        {
+            db.Comments.Add(new Comment { Text = "bedst komentar", User = user });
+            db.Comments.Add(new Comment { Text = "Værste komentar", User = user });
+            db.SaveChanges();
+
+        }
+
+
     }
 
     public List<Post> GetPosts()
@@ -47,10 +56,6 @@ public class DataService
         return db.Posts.Include(b => b.User).ToList();
     }
 
-    public Post GetPost(int id)
-    {
-        return db.Posts.Include(b => b.User).FirstOrDefault(b => b.PostId == id);
-    }
 
     public List<User> GetUsers()
     {
@@ -62,9 +67,9 @@ public class DataService
         return db.Users.FirstOrDefault(a => a.UserId == id);
     }
 
-    public List<Comment> GetComments()
+    public Post GetPost(int id)
     {
-        return db.Comments.ToList();
+        return db.Posts.FirstOrDefault(a => a.PostId == id);
     }
 
     //public Comment GetComment();
