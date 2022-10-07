@@ -19,7 +19,6 @@ public class DataService
     /// </summary>
     public void SeedData()
     {
-
         User user = db.Users.FirstOrDefault()!;
         if (user == null)
         {
@@ -45,17 +44,13 @@ public class DataService
             db.Comments.Add(new Comment { Text = "bedst komentar", User = user });
             db.Comments.Add(new Comment { Text = "Værste komentar", User = user });
             db.SaveChanges();
-
         }
-
-
     }
 
     public List<Post> GetPosts()
     {
         return db.Posts.Include(b => b.User).ToList();
     }
-
 
     public List<User> GetUsers()
     {
@@ -81,6 +76,4 @@ public class DataService
         db.SaveChanges();
         return "Post created";
     }
-
-
 }

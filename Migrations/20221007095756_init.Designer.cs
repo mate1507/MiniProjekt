@@ -11,8 +11,8 @@ using Model;
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20221004092722_Comments")]
-    partial class Comments
+    [Migration("20221007095756_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
