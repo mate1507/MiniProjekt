@@ -42,22 +42,8 @@ public class DataService
         Comment comment = db.Comments.FirstOrDefault()!;
         if (comment == null)
         {
-            db.Comments.Add(
-                new Comment
-                {
-                    Text = "bedst komentar",
-                    User = user,
-                    Post = post
-                }
-            );
-            db.Comments.Add(
-                new Comment
-                {
-                    Text = "Værste komentar",
-                    User = user,
-                    Post = post
-                }
-            );
+            db.Comments.Add(new Comment { Text = "bedst komentar", User = user });
+            db.Comments.Add(new Comment { Text = "Værste komentar", User = user });
             db.SaveChanges();
         }
     }
