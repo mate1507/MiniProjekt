@@ -4,25 +4,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Model;
+using shared.Model;
 
 #nullable disable
 
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20221007100654_Updated Database")]
-    partial class UpdatedDatabase
+    [Migration("20221011103029_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
 
-            modelBuilder.Entity("Model.Comment", b =>
+            modelBuilder.Entity("shared.Model.Comment", b =>
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Downvotes")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("PostId")
@@ -31,6 +34,9 @@ namespace TodoApi.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Upvotes")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
@@ -44,15 +50,21 @@ namespace TodoApi.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Model.Post", b =>
+            modelBuilder.Entity("shared.Model.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("PostName")
+                    b.Property<int>("Downvotes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Upvotes")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
@@ -64,7 +76,7 @@ namespace TodoApi.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Model.User", b =>
+            modelBuilder.Entity("shared.Model.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -79,13 +91,13 @@ namespace TodoApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Model.Comment", b =>
+            modelBuilder.Entity("shared.Model.Comment", b =>
                 {
-                    b.HasOne("Model.Post", null)
+                    b.HasOne("shared.Model.Post", null)
                         .WithMany("Comments")
                         .HasForeignKey("PostId");
 
-                    b.HasOne("Model.User", "User")
+                    b.HasOne("shared.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -94,9 +106,9 @@ namespace TodoApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Post", b =>
+            modelBuilder.Entity("shared.Model.Post", b =>
                 {
-                    b.HasOne("Model.User", "User")
+                    b.HasOne("shared.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -105,7 +117,7 @@ namespace TodoApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Model.Post", b =>
+            modelBuilder.Entity("shared.Model.Post", b =>
                 {
                     b.Navigation("Comments");
                 });

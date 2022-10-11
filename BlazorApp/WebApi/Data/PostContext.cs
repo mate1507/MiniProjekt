@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Model;
+using shared.Model;
 
-namespace Model
+namespace shared.Model
 {
     public class PostContext : DbContext
     {
@@ -9,9 +9,7 @@ namespace Model
         public DbSet<User> Users => Set<User>();
         public DbSet<Comment> Comments => Set<Comment>();
 
-
-        public PostContext (DbContextOptions<PostContext> options)
-            : base(options)
+        public PostContext(DbContextOptions<PostContext> options) : base(options)
         {
             // Den her er tom. Men ": base(options)" sikre at constructor
             // på DbContext super-klassen bliver kaldt.

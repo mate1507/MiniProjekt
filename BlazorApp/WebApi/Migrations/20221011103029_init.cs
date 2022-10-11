@@ -4,7 +4,7 @@
 
 namespace TodoApi.Migrations
 {
-    public partial class UpdatedDatabase : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +27,9 @@ namespace TodoApi.Migrations
                 {
                     PostId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PostName = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Upvotes = table.Column<int>(type: "INTEGER", nullable: false),
+                    Downvotes = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -48,6 +50,8 @@ namespace TodoApi.Migrations
                     CommentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
+                    Upvotes = table.Column<int>(type: "INTEGER", nullable: false),
+                    Downvotes = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     PostId = table.Column<int>(type: "INTEGER", nullable: true)
                 },

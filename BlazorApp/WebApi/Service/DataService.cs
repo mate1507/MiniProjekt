@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
-using Model;
+using shared.Model;
 
 namespace Service;
 
@@ -29,15 +29,13 @@ public class DataService
             db.SaveChanges();
         }
 
-
-
         Post post = db.Posts.FirstOrDefault()!;
         if (post == null)
         {
-            post = new Post { PostName = "Harry Potter", User = user };
+            post = new Post { Title = "Harry Potter", User = user };
             db.Posts.Add(post);
-            db.Posts.Add(new Post { PostName = "Ringenes Herre", User = user });
-            db.Posts.Add(new Post { PostName = "Entity Framework for Dummies", User = user });
+            db.Posts.Add(new Post { Title = "Ringenes Herre", User = user });
+            db.Posts.Add(new Post { Title = "Entity Framework for Dummies", User = user });
             db.SaveChanges();
         }
 
@@ -48,9 +46,6 @@ public class DataService
             post.Comments.Add(new Comment { Text = "Værste komentar", User = user });
             db.SaveChanges();
         }
-
-
-
     }
 
     public List<Post> GetPosts()
@@ -70,15 +65,18 @@ public class DataService
 
     public Post GetPost(int id)
     {
-        return db.Posts.Include(p => p.User).Include(b => b.Comments).FirstOrDefault(a => a.PostId == id); //join User på en Post 
+        return db.Posts
+            .Include(p => p.User)
+            .Include(b => b.Comments)
+            .FirstOrDefault(a => a.PostId == id); //join User på en Post
     }
 
     //public Comment GetComment();
 
-    public string CreatePost(string PostName, int UserId)
+    public string CreatePost(string Title, int UserId)
     {
         User user = db.Users.FirstOrDefault(a => a.UserId == UserId);
-        db.Posts.Add(new Post { PostName = PostName, User = user });
+        db.Posts.Add(new Post { Title = Title, User = user });
         db.SaveChanges();
         return "Post created";
     }
