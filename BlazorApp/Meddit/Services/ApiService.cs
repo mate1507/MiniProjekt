@@ -22,6 +22,7 @@ public class ApiService
     public async Task<Post[]> GetPosts()
     {
         string url = $"{baseAPI}posts/";
+        Console.WriteLine(url);
         return await http.GetFromJsonAsync<Post[]>(url);
     }
 
