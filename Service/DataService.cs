@@ -32,7 +32,8 @@ public class DataService
         Post post = db.Posts.FirstOrDefault()!;
         if (post == null)
         {
-            db.Posts.Add(new Post { PostName = "Harry Potter", User = user });
+            post = new Post { PostName = "Harry Potter", User = user };
+            db.Posts.Add(post);
             db.Posts.Add(new Post { PostName = "Ringenes Herre", User = user });
             db.Posts.Add(new Post { PostName = "Entity Framework for Dummies", User = user });
             db.SaveChanges();
@@ -41,8 +42,22 @@ public class DataService
         Comment comment = db.Comments.FirstOrDefault()!;
         if (comment == null)
         {
-            db.Comments.Add(new Comment { Text = "bedst komentar", User = user });
-            db.Comments.Add(new Comment { Text = "Værste komentar", User = user });
+            db.Comments.Add(
+                new Comment
+                {
+                    Text = "bedst komentar",
+                    User = user,
+                    Post = post
+                }
+            );
+            db.Comments.Add(
+                new Comment
+                {
+                    Text = "Værste komentar",
+                    User = user,
+                    Post = post
+                }
+            );
             db.SaveChanges();
         }
     }
@@ -66,8 +81,6 @@ public class DataService
     {
         return db.Posts.FirstOrDefault(a => a.PostId == id);
     }
-
-    //public Comment GetComment();
 
     public string CreatePost(string PostName, int UserId)
     {
