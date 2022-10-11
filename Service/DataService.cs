@@ -29,10 +29,13 @@ public class DataService
             db.SaveChanges();
         }
 
+
+
         Post post = db.Posts.FirstOrDefault()!;
         if (post == null)
         {
-            db.Posts.Add(new Post { PostName = "Harry Potter", User = user });
+            post = new Post { PostName = "Harry Potter", User = user };
+            db.Posts.Add(post);
             db.Posts.Add(new Post { PostName = "Ringenes Herre", User = user });
             db.Posts.Add(new Post { PostName = "Entity Framework for Dummies", User = user });
             db.SaveChanges();
@@ -41,10 +44,13 @@ public class DataService
         Comment comment = db.Comments.FirstOrDefault()!;
         if (comment == null)
         {
-            db.Comments.Add(new Comment { Text = "bedst komentar", User = user });
-            db.Comments.Add(new Comment { Text = "Værste komentar", User = user });
+            post.Comments.Add(new Comment { Text = "bedst komentar", User = user });
+            post.Comments.Add(new Comment { Text = "Værste komentar", User = user });
             db.SaveChanges();
         }
+
+
+
     }
 
     public List<Post> GetPosts()
@@ -64,7 +70,7 @@ public class DataService
 
     public Post GetPost(int id)
     {
-        return db.Posts.FirstOrDefault(a => a.PostId == id);
+        return db.Posts.Include(p => p.User).Include(b => b.Comments).FirstOrDefault(a => a.PostId == id); //join User på en Post 
     }
 
     //public Comment GetComment();

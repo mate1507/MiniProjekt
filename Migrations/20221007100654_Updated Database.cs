@@ -4,7 +4,7 @@
 
 namespace TodoApi.Migrations
 {
-    public partial class init : Migration
+    public partial class UpdatedDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

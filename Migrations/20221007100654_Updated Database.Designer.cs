@@ -11,8 +11,8 @@ using Model;
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20221007095756_init")]
-    partial class init
+    [Migration("20221007100654_Updated Database")]
+    partial class UpdatedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
