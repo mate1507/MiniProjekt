@@ -71,13 +71,20 @@ public class DataService
             .FirstOrDefault(a => a.PostId == id); //join User på en Post
     }
 
-    //public Comment GetComment();
-
     public string CreatePost(string Title, int UserId)
     {
         User user = db.Users.FirstOrDefault(a => a.UserId == UserId);
         db.Posts.Add(new Post { Title = Title, User = user });
         db.SaveChanges();
         return "Post created";
+    }
+
+    public string CreateComment(string Text, int UserId, int PostId)
+    {
+        User user = db.Users.FirstOrDefault(a => a.UserId == UserId);
+        Post post = db.Posts.FirstOrDefault(a => a.PostId == PostId);
+        post.Comments.Add(new Comment { Text = Text, User = user });
+        db.SaveChanges();
+        return "Comment created";
     }
 }
