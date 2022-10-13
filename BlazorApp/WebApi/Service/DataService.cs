@@ -87,4 +87,21 @@ public class DataService
         db.SaveChanges();
         return "Comment created";
     }
+
+    public string AddUpvote(int PostId)
+    {
+        Post post = db.Posts.FirstOrDefault(a => a.PostId == PostId);
+        post.Upvotes++;
+        db.SaveChanges();
+        return "Upvote added";
+    }
+    /*
+        public string AddDownvote(int postId)
+        {
+            Post post = db.Posts.FirstOrDefault(a => a.PostId == postId);
+            post.Downvotes--;
+            db.SaveChanges();
+            return "Downvote added";
+        }
+        */
 }

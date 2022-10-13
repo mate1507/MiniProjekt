@@ -125,6 +125,15 @@ app.MapPost(
     }
 );
 
+app.MapPut(
+    "/api/posts/{PostId}/upvote/",
+    (DataService service, int PostId) =>
+    {
+        string result = service.AddUpvote(PostId);
+        return new { message = result };
+    }
+);
+
 app.Run();
 
 record NewPostData(string Title, int UserId);
