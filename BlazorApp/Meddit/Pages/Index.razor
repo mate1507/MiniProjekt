@@ -1,5 +1,14 @@
 ﻿@page "/"
 
+@inherits LayoutComponentBase
+
+@using Meddit.Data;
+
+@inject ApiService apiService
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
 <PageTitle>Meddit</PageTitle>
 
 <h1>Welcome to Meddit</h1>
@@ -8,11 +17,28 @@
 
 <PostList></PostList>
 
-<h3>Notes about this app:</h3>
-<ul>
-    <li>You need to reload browser to reload data.</li>
-    <li>Dates are not implemented.</li>
-    <li>Only upvote on posts work. No other voting works yet.</li>
-    <li>Cannot create new posts, only new comments.</li>
-    <li>No user selection. User is hardcoded (Mads).</li>
-</ul>
+
+<h4>Here you can leave your post</h4>
+
+<div>
+    <br />
+    <h3>Write a Post</h3>
+    <input placeholder="Content" type="input" id="content" @bind-value="title" />
+    <button id="createPostButton" type="button" @onclick="CreateNewPost">Post Post</button>
+</div>
+
+@code {
+
+
+    private string? title;
+    private async void CreateNewPost()
+    {
+        if (title == null)
+        {
+            return;
+        }
+        // TODO: Provide list of users from dropdown, or maybe just convert
+        // from username to UserId
+        await apiService.CreatePost(title, 1); // UserId: 1
+    }
+}

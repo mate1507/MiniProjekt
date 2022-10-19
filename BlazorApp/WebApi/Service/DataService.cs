@@ -95,7 +95,7 @@ public class DataService
         db.SaveChanges();
         return "Upvote added";
     }
-    /*
+    
         public string AddDownvote(int postId)
         {
             Post post = db.Posts.FirstOrDefault(a => a.PostId == postId);
@@ -103,5 +103,21 @@ public class DataService
             db.SaveChanges();
             return "Downvote added";
         }
-        */
+        
+
+    public string AddCommentUpvote(int CommentId)
+    {
+        Comment comment = db.Comments.FirstOrDefault(a => a.CommentId == CommentId);
+        comment.Upvotes++;
+        db.SaveChanges();
+        return "Upvote added";
+    }
+
+    public string AddCommentDownvote(int CommentId)
+    {
+        Comment comment = db.Comments.FirstOrDefault(a => a.CommentId == CommentId);
+        comment.Downvotes--;
+        db.SaveChanges();
+        return "Upvote added";
+    }
 }

@@ -8,7 +8,7 @@
 @using shared.Model;
 @inject ApiService apiService
 
-<PageTitle>Kreddit</PageTitle>
+<PageTitle>Meddit</PageTitle>
 
 <style>
     div.contents {
@@ -28,7 +28,7 @@ else
 {
     <div class="contents">
         <h4>@Post.Title</h4>
-        <p><strong>User: @Post.User.Username, Votes: @(Post.Upvotes - Post.Downvotes)</strong></p>
+        <p><strong>User: @Post.User.Username, Votes: @(Post.Upvotes + Post.Downvotes)</strong></p>
         <p>@Post.Title</p>
     </div>
 
@@ -45,7 +45,7 @@ else
                 <tr>
                     <td>@comment.User.Username</td>
                     <td>@comment.Text</td>
-                    <td>@(comment.Upvotes - comment.Downvotes)</td>
+                    <td>@(comment.Upvotes + comment.Downvotes)</td>
                     <td><button @onclick="() => Upvote(comment.CommentId)">Upvote</button></td>
                     <td><button @onclick="() => Downvote(comment.CommentId)">Downvote</button></td>
                 </tr>
@@ -54,7 +54,7 @@ else
     </div>
 
     <!-- This demonstrates how to pass in PostId to the component 'CreateComment'. See how 
-                     it is used in the file CreateComment.razor -->
+                             it is used in the file CreateComment.razor -->
     <CreateComment PostId=@PostId></CreateComment>
 }
 
@@ -63,6 +63,7 @@ else
     public string Id { get; set; }
     public int PostId { get { return int.Parse(Id); } }
     public Post Post { get; set; }
+    public Comment Comment { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,11 +71,11 @@ else
     }
     private async void Upvote(int id)
     {
-        Console.WriteLine("Not implemented 😪");
+        var updatedComment = await apiService.UpvoteComment(id);
     }
 
     private async void Downvote(int id)
     {
-        Console.WriteLine("Not implemented 😪");
+        var updatedComment = await apiService.DownvoteComment(id);
     }
 }

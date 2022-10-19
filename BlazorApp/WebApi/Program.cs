@@ -134,6 +134,34 @@ app.MapPut(
     }
 );
 
+app.MapPut(
+    "/api/posts/{PostId}/downvote/",
+    (DataService service, int PostId) =>
+    {
+        string result = service.AddDownvote(PostId);
+        return new { message = result };
+    }
+);
+
+app.MapPut(
+    "/api/comments/{CommentId}/upvote/",
+    (DataService service, int CommentId) =>
+    {
+        string result = service.AddCommentUpvote(CommentId);
+        return new { message = result };
+    }
+);
+
+app.MapPut(
+"/api/comments/{CommentId}/downvote/",
+(DataService service, int CommentId) =>
+{
+    string result = service.AddCommentDownvote(CommentId);
+    return new { message = result };
+}
+);
+
+
 app.Run();
 
 record NewPostData(string Title, int UserId);

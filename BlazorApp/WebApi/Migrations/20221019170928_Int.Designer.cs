@@ -11,8 +11,8 @@ using shared.Model;
 namespace TodoApi.Migrations
 {
     [DbContext(typeof(PostContext))]
-    [Migration("20221017084352_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221019170928_Int")]
+    partial class Int
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
